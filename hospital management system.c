@@ -10,7 +10,7 @@ void mainmenu();
 void addrec();
 void patientlist();
 void dischargepatient();
-void searchrec();
+void searchpatientrec();
 void adddoctor();
 //void listdoctor();
 
@@ -26,7 +26,7 @@ struct patient
 
 struct doctor{
     int id;
-    char gender;
+    char gender[20];
     char name[50];
     char address[50];
     char specialize[50];
@@ -106,7 +106,7 @@ void mainmenu()
 		printf("\n\t\t3.Discharge the patient");
 		printf("\n\t\t4.Search Patient record");
 		printf("\n\t\t5.Add doctor record");
-		printf("\n\t\t6.Search doctor record");
+		printf("\n\t\t6.List doctor record");
 		printf("\n\t\t7.Exit");
 		printf("\nchoose any number that you want:");
 		scanf("%d",&choice);
@@ -125,7 +125,7 @@ void mainmenu()
 				break;
 				
 			case 4:
-				searchrec();
+				searchpatientrec();
 				break;
 				
 			case 5:
@@ -245,7 +245,7 @@ void mainmenu()
     rename("temp.txt", "patient.txt");
     system("cls");
 }
-	 void searchrec()
+	 void searchpatientrec()
 	 {
 	 	system("cls");
 		title();
@@ -288,19 +288,19 @@ void mainmenu()
     printf("\n\nEnter Doctor id: ");
     scanf("%d", &d.id);
 
-    printf("Enter Doctor Name: ");
+    printf("\nEnter Doctor Name: ");
     fflush(stdin); 
     gets(d.name);
 
-    printf("Enter Doctor gender: ");
+    printf("\nEnter Doctor gender: ");
     fflush(stdin);
     gets(d.gender);
 
-    printf("Doctor Specialize in: ");
+    printf("\nDoctor Specialize in: ");
     fflush(stdin);
     gets(d.specialize);
     
-    printf("Date");
+    printf("\nDate:");
     fflush(stdin);
     gets(d.date);
 
