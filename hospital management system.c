@@ -1,18 +1,19 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
+#include<time.h>
 #include<conio.h>
 
 void welcomescreen();
 void title();
 void loginscreen();
 void mainmenu();
-void addrec();
+void addpatientrec();
 void patientlist();
 void dischargepatient();
 void searchpatientrec();
 void adddoctor();
-//void listdoctor();
+void listdoctor();
 
 struct patient
 {
@@ -43,7 +44,7 @@ int main()
 	return 0;
 }
 void welcomescreen(){
-	printf("\n\n***********************************************************************************************************************************************************\n");
+	printf("\n\n\n\n\n\n\n\n***********************************************************************************************************************************************************\n");
 	printf("\t \t\t\t\t\t     WELCOME TO\n");
 	printf("\t\t\t\t\t\tGRANDI HOSPITAL NEPAL\t\t\t\t\t\t\n");
 	printf("************************************************************************************************************************************************************\n");
@@ -53,7 +54,7 @@ void welcomescreen(){
 }
 void title(){
 	printf("\n########################################################################################################################\n");
-	printf("\n\t\t\t\t\t\t\tGRANDI HOSPITAL\n");
+	printf("\n\t\t\t\t\t\tGRANDI HOSPITAL\n");
 	printf("\n########################################################################################################################\n");
 }
 void loginscreen()
@@ -72,7 +73,8 @@ void loginscreen()
 	    if((strcmp(username,originalusername)==0)&& (strcmp(password,originalpassword)==0))
 	    {
 	    	printf("\n\n\t\t\tlogin successfully......");
-	    	printf("\n\n\npress any key to cotinue......");
+	    	printf("\n\n\n\n\n\t\t\t\tWelcome to the GRANDI HOSPITAL MANAGEMNET SYSTEM..........");
+	    	//printf("\n\n\npress any key to cotinue......");
 			getch();
 	    	mainmenu();//call main menu
 	    	break;
@@ -100,7 +102,7 @@ void mainmenu()
 	title();
 	char press;
 	while(1){
-		label:
+		label:	
 		printf("\n\t\t1.Add record of  the patient");
 		printf("\n\t\t2.Patient list");
 		printf("\n\t\t3.Discharge the patient");
@@ -108,12 +110,12 @@ void mainmenu()
 		printf("\n\t\t5.Add doctor record");
 		printf("\n\t\t6.List doctor record");
 		printf("\n\t\t7.Exit");
-		printf("\nchoose any number that you want:");
+		printf("\n\nchoose any number that you want:");
 		scanf("%d",&choice);
 		switch(choice)
 		{
 			case 1:
-				addrec();
+				addpatientrec();
 				break;
 				
 			case 2:
@@ -140,23 +142,30 @@ void mainmenu()
 				exit(0);
 				break;
 				
-			deafault:
-				printf("\ninvalid input............\n");
+			default:
+				printf("\nThe choice is not valid......\n");
+				goto label;
 			
 		}
-		printf("\nDo you want to continue?..Press y to continue.");
+		printf("\nDo you want to continue?..Press Y to continue.");
 		scanf("%c",&press);
 		if(press=='y'||press=='Y')
 		{
 			goto label;
 		}
+		system("cls");
 	}
 }
-	void addrec()
+	void addpatientrec()
 	{
 		FILE *ptr;
 		system("cls");
 		ptr=fopen("D:\\record.txt","a+");
+		char myDate[12];
+        time_t t = time(NULL);
+        struct tm tm = *localtime(&t);
+        sprintf(myDate, "%02d/%02d/%d", tm.tm_mday, tm.tm_mon+1, tm.tm_year + 1900);
+		strcpy(p.date, myDate);
 		title();
 		printf("\n\n\n\t\t\t********************************");
 		printf("\n\t\t\t\tPATIENT RECORD");
@@ -166,7 +175,7 @@ void mainmenu()
 	    printf("\nenter the name of patient:");
 	    fflush(stdin);
 	    gets(p.name);
-	    printf("enter the gender ");
+	    printf("enter the gender: ");
 	    fflush(stdin);	
 	    gets(p.gender);
 	    printf("\nenter the address of patient:");
@@ -175,10 +184,10 @@ void mainmenu()
 	    printf("\nenter the disease of patient:");
 	    fflush(stdin);
 	    gets(p.disease);
-	    printf("\nenter the date:");
+	    /*printf("\nenter the date:");
 	    fflush(stdin);
-	    gets(p.date);
-	    printf("\npatient detail added successfully......");
+	    gets(p.date);*/
+	    printf("\n\n\t\t\t\tpatient detail added successfully......");
 	    getch();
 	    fwrite(&p,sizeof(p),1,ptr);
 	    fclose(ptr);
@@ -188,19 +197,18 @@ void mainmenu()
 	{
 		system("cls");
 		title();
-		printf("\n\n\t\t**********Patient List**********\n");
-		printf("\n\n%-10s %-20s %-30s %-30s %-20s %s\n", "Id"," Name","gender","Address","Disease","Date");
+		printf("\n\n\n\n\t\t**********Patient List**********\n");
+		printf("\n\n\n%-10s %-20s %-30s %-30s %-20s %s\n", "Id"," Name","gender","Address","Disease","Date");
         printf("------------------------------------------------------------------------------------------------------------------------\n");
 	    rewind(pk);
 		pk=fopen("D:\\record.txt","r+");
 	    while(fread(&p, sizeof(p), 1, pk) == 1)
 	    {
-			printf("\n\n%-10d  %-3 %-20s %-30s %-30s %s\n", p.id,p.name,p.gender, p.address, p.disease, p.date);
+			printf("\n%-10d %-2 %-19s %-30s %-30s %s\n", p.id,p.name,p.gender, p.address, p.disease, p.date);
 	    	
 		}
-		/*printf("\npress any key to continue....");
-		mainmenu();*/
 		fclose(pk);
+		printf("\n\n\t\tPress any key to continue.......");
 		getch();
 		system("cls");
 	}
@@ -213,8 +221,8 @@ void mainmenu()
 		printf("\n\t\t\tDISCHARGE PATIENT");
 		printf("\nenter patient id to discharge:");
 		scanf("%d",&id);
-		pk=fopen("D:\\record.txt","rb");
-		s=fopen("D:\\temp.txt","wb");
+		pk=fopen("D:\\record.txt","r+");
+		s=fopen("D:\\temp.txt","w+");
 		while(fread(&p, sizeof(p), 1, pk) == 1)
 		{
 
@@ -251,10 +259,13 @@ void mainmenu()
 		title();
 	 	int id ;
 	 	printf("\n\t\t\tSearch Patient Record");
-	 	printf("\nenter the id that you want to search the record:");
+	 	printf("\n\t\t\t-------------------------------");
+	 	printf("\n\n\nenter the id that you want to search the record:");
 	 	scanf("%d",&id);
-	 	rewind(pk);
-	 	pk=fopen("D:\\patient.txt","rb");
+	 	printf("\n\n%-10s %-20s %-30s %-30s %-20s %s\n", "Id"," Name","gender","Address","Disease","Date");
+        printf("------------------------------------------------------------------------------------------------------------------------\n");
+	    rewind(pk);
+	 	pk=fopen("D:\\patient.txt","r+");
 	 	while(fread(&p, sizeof(p), 1, pk) == 1)
 		 {
 
@@ -276,15 +287,15 @@ void mainmenu()
     	system("cls");
     	title();
     	FILE *pk;
-	/*char myDate[12];
+	char myDate[12];
     time_t t = time(NULL);
     struct tm tm = *localtime(&t);
     sprintf(myDate, "%02d/%02d/%d", tm.tm_mday, tm.tm_mon+1, tm.tm_year + 1900);
-    strcpy(d.date, myDate);*/
+    strcpy(d.date, myDate);
     printf("\n\n\n\t\t\t********************************");
 	printf("\n\t\t\t\tDOCTOR RECORD");
 	printf("\n\t\t\t********************************");
-    pk=fopen("d:\\doctor.txt","wb");
+    pk=fopen("d:\\doctor.txt","a+");
     printf("\n\nEnter Doctor id: ");
     scanf("%d", &d.id);
 
@@ -300,9 +311,9 @@ void mainmenu()
     fflush(stdin);
     gets(d.specialize);
     
-    printf("\nDate:");
+    /*printf("\nDate:");
     fflush(stdin);
-    gets(d.date);
+    gets(d.date);*/
 
     printf("Doctor Added Successfully\n\n");
     getch();
@@ -327,6 +338,7 @@ void mainmenu()
 			 
 		}
 		fclose(pk);
+		printf("\n\n\t\tPress any key to continue.......");
 		getch();
 		system("cls");
 	}
