@@ -251,6 +251,7 @@ void mainmenu()
 
     remove("patient.txt");
     rename("temp.txt", "patient.txt");
+    getch();
     system("cls");
 }
 	 void searchpatientrec()
@@ -264,8 +265,8 @@ void mainmenu()
 	 	scanf("%d",&id);
 	 	printf("\n\n%-10s %-20s %-30s %-30s %-20s %s\n", "Id"," Name","gender","Address","Disease","Date");
         printf("------------------------------------------------------------------------------------------------------------------------\n");
-	    rewind(pk);
-	 	pk=fopen("D:\\patient.txt","r+");
+        pk=fopen("D:\\patient.txt","r+");
+        rewind(pk);
 	 	while(fread(&p, sizeof(p), 1, pk) == 1)
 		 {
 
@@ -279,6 +280,7 @@ void mainmenu()
               printf("\npatient id did not match so ther is no any patient that you want to search");
            }
        }
+       getch();
        system("cls");
 	 
     }
