@@ -43,29 +43,42 @@ int main()
 	loginscreen();
 	return 0;
 }
-void welcomescreen(){
-	printf("\n\n\n\n\n\n\n\n***********************************************************************************************************************************************************\n");
-	printf("\t \t\t\t\t\t     WELCOME TO\n");
-	printf("\t\t\t\t\t\tGRANDI HOSPITAL NEPAL\t\t\t\t\t\t\n");
-	printf("************************************************************************************************************************************************************\n");
-	printf("\n\n\n\npres any key to continue.....");
+void welcomescreen()
+{
+	system("color 1 ");
+	printf("\n\n\n\n\n\n\n\t\t***************************************************************************\n");
+	printf("\t\t*\t\t\t\t     WELCOME TO\t\t\t\t  *\n");
+	printf("\t\t*\t\t\t\tGRANDI HOSPITAL NEPAL\t\t\t  *\n");
+	printf("\t\t***************************************************************************\n");
+	printf("\n\n\n\n\n\n\t\t\tpress any key to continue.....");
 	getch();
 	system("cls");
 }
-void title(){
-	printf("\n########################################################################################################################\n");
-	printf("\n\t\t\t\t\t\tGRANDI HOSPITAL\n");
-	printf("\n########################################################################################################################\n");
+void title()
+{
+	system("color 4 ");
+	printf("\n\n\n\n\n\n\n\t\t***************************************************************************\n");
+	printf("\t\t*\t\t\t\tGRANDI HOSPITAL\t\t\t\t  *\n");
+	printf("\t\t***************************************************************************\n");
 }
 void loginscreen()
 {
+	system("color 7 ");
 	int i=0;
 	char username[20];
 	char password[15];
-	char originalusername[12]="admin@11";
-	char originalpassword[8]="admin";
+	char originalusername[12];
+	char originalpassword[8];
 	do{
-		printf("\n\n\t\t\t\tenter the username and password:");
+		FILE *ptr, *pt;
+		
+		ptr=fopen("D:\\password.txt","r");
+		fgets(originalpassword,8,ptr);
+		pt=fopen("D:\\username.txt","r");
+		fgets(originalusername,12,pt);
+		
+		
+		printf("\n\n\n\t\t\t\tenter the username and password:");
 	    printf("\n\n\t\t\t\tusername:");
 	    scanf("%s",&username);
 	    printf("\n\t\t\t\tpassword:");
@@ -81,10 +94,11 @@ void loginscreen()
 		}
 		else{
 			system("cls");
-			printf("\npassword is incorrect.....");
+			printf("\n\n\t\tpassword is incorrect.....");
 			i++;
-			printf("\npress any key to cotinue......");
+			printf("\n\n\n\t\tpress any key to cotinue......");
 			getch();
+			system("cls");
 		}
 	}while(i<=2);
 		
@@ -97,20 +111,21 @@ void loginscreen()
 }
 void mainmenu()
 {
+	system("color 5 ");
 	system("cls");
 	int choice;
 	title();
 	char press;
 	while(1){
 		label:	
-		printf("\n\t\t1.Add record of  the patient");
-		printf("\n\t\t2.Patient list");
-		printf("\n\t\t3.Discharge the patient");
-		printf("\n\t\t4.Search Patient record");
-		printf("\n\t\t5.Add doctor record");
-		printf("\n\t\t6.List doctor record");
-		printf("\n\t\t7.Exit");
-		printf("\n\nchoose any number that you want:");
+		printf("\n\t\t\t\t1.Add record of  the patient");
+		printf("\n\t\t\t\t2.Patient list");
+		printf("\n\t\t\t\t3.Discharge the patient");
+		printf("\n\t\t\t\t4.Search Patient record");
+		printf("\n\t\t\t\t5.Add doctor record");
+		printf("\n\t\t\t\t6.List doctor record");
+		printf("\n\t\t\t\t7.Exit");
+		printf("\n\n\n\tchoose any number that you want:");
 		scanf("%d",&choice);
 		switch(choice)
 		{
@@ -158,18 +173,19 @@ void mainmenu()
 }
 	void addpatientrec()
 	{
-		FILE *ptr;
+		system("color 4 ");
+		FILE *pk;
 		system("cls");
-		ptr=fopen("D:\\record.txt","a+");
 		char myDate[12];
         time_t t = time(NULL);
         struct tm tm = *localtime(&t);
         sprintf(myDate, "%02d/%02d/%d", tm.tm_mday, tm.tm_mon+1, tm.tm_year + 1900);
-		strcpy(p.date, myDate);
+        strcpy(p.date, myDate);
 		title();
 		printf("\n\n\n\t\t\t********************************");
 		printf("\n\t\t\t\tPATIENT RECORD");
 		printf("\n\t\t\t********************************");
+		pk=fopen("D:\\record.txt","a+");
 		printf("\nenter the patient id:");
 	    scanf("%d",&p.id);
 	    printf("\nenter the name of patient:");
@@ -189,15 +205,16 @@ void mainmenu()
 	    gets(p.date);*/
 	    printf("\n\n\t\t\t\tpatient detail added successfully......");
 	    getch();
-	    fwrite(&p,sizeof(p),1,ptr);
-	    fclose(ptr);
+	    fwrite(&p,sizeof(p),1,pk);
+	    fclose(pk);
 	    system("cls");
 	}
 	void patientlist()
 	{
+		system("color 6 ");
 		system("cls");
 		title();
-		printf("\n\n\n\n\t\t**********Patient List**********\n");
+		printf("\n\n\n\n\t\t\t\t**********Patient List**********\n");
 		printf("\n\n\n%-10s %-20s %-30s %-30s %-20s %s\n", "Id"," Name","gender","Address","Disease","Date");
         printf("------------------------------------------------------------------------------------------------------------------------\n");
 	    rewind(pk);
@@ -214,6 +231,7 @@ void mainmenu()
 	}
 	void dischargepatient()
 	{
+		system("color 8 ");
 		int id,k=0;
 		system("cls");
 		title();
@@ -240,6 +258,7 @@ void mainmenu()
     if(k==1)
 	{
         printf("\n\nPatient Discharged Successfully.");
+        
     }
 	else
 	{
@@ -256,17 +275,18 @@ void mainmenu()
 }
 	 void searchpatientrec()
 	 {
-	 	system("cls");
+	 	system("color 3 ");
+		 system("cls");
 		title();
 	 	int id ;
 	 	printf("\n\t\t\tSearch Patient Record");
 	 	printf("\n\t\t\t-------------------------------");
 	 	printf("\n\n\nenter the id that you want to search the record:");
 	 	scanf("%d",&id);
+	 	rewind(pk);
+		pk=fopen("D:\\patient.txt","r+");
 	 	printf("\n\n%-10s %-20s %-30s %-30s %-20s %s\n", "Id"," Name","gender","Address","Disease","Date");
         printf("------------------------------------------------------------------------------------------------------------------------\n");
-        pk=fopen("D:\\patient.txt","r+");
-        rewind(pk);
 	 	while(fread(&p, sizeof(p), 1, pk) == 1)
 		 {
 
@@ -286,7 +306,8 @@ void mainmenu()
     }
     void adddoctor()
     {
-    	system("cls");
+    	system("color 4 ");
+		system("cls");
     	title();
     	FILE *pk;
 	char myDate[12];
@@ -325,6 +346,7 @@ void mainmenu()
 	}
 	void listdoctor()
 	{
+		system("color 5 ");
 		system("cls");
 		title();
 		//printf("\n\n\n\t\t\t********************************");
