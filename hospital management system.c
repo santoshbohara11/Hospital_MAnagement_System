@@ -236,11 +236,11 @@ void mainmenu()
 		system("cls");
 		title();
 		FILE *s;
-		printf("\n\t\t\tDISCHARGE PATIENT");
-		printf("\nenter patient id to discharge:");
+		printf("\n\n\n\t\t\tDISCHARGE PATIENT");
+		printf("\n\n\nenter patient id to discharge:");
 		scanf("%d",&id);
-		pk=fopen("D:\\record.txt","r+");
-		s=fopen("D:\\temp.txt","w+");
+		pk=fopen("D:\\record.txt","rb");
+		s=fopen("D:\\temp.txt","wb");
 		while(fread(&p, sizeof(p), 1, pk) == 1)
 		{
 
@@ -257,17 +257,15 @@ void mainmenu()
 
     if(k==1)
 	{
-        printf("\n\nPatient Discharged Successfully.");
+        printf("\n\nPatient Discharged Successfully...........");
         
     }
 	else
 	{
         printf("\n\nRecord Not Found !");
     }
-
-    fclose(pk);
+	fclose(pk);
     fclose(s);
-
     remove("patient.txt");
     rename("temp.txt", "patient.txt");
     getch();
@@ -338,7 +336,7 @@ void mainmenu()
     fflush(stdin);
     gets(d.date);*/
 
-    printf("Doctor Added Successfully\n\n");
+    printf("\n\n\t\t\t\tDoctor Added Successfully....\n\n");
     getch();
     fwrite(&d,sizeof(d),1,pk);
     fclose(pk);
