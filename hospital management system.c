@@ -185,7 +185,7 @@ void mainmenu()
 		printf("\n\n\n\t\t\t********************************");
 		printf("\n\t\t\t\tPATIENT RECORD");
 		printf("\n\t\t\t********************************");
-		pk=fopen("D:\\record.txt","a+");
+		pk=fopen("record.txt","ab");
 		printf("\n\n\nenter the patient id:");
 	    scanf("%d",&p.id);
 	    printf("\nenter the name of patient:");
@@ -218,7 +218,7 @@ void mainmenu()
 		printf("\n\n\n%-10s %-20s %-15s %-30s %-15s %s\n", "Id"," Name","gender","Address","Disease","Date");
         printf("------------------------------------------------------------------------------------------------------------------\n");
 	    rewind(pk);
-		pk=fopen("D:\\record.txt","r+");
+		pk=fopen("record.txt","rb");
 	    while(fread(&p, sizeof(p), 1, pk) == 1)
 	    {
 			printf("\n%-10d %-20s %-15s %-30s %-15s %s\n", p.id,p.name,p.gender, p.address, p.disease, p.date);
@@ -239,8 +239,8 @@ void mainmenu()
 		printf("\n\n\n\t\t\tDISCHARGE PATIENT");
 		printf("\n\n\nenter patient id to discharge:");
 		scanf("%d",&id);
-		pk=fopen("D:\\record.txt","r+");
-		s=fopen("D:\\temp.txt","w+");
+		pk=fopen("record.txt","rb");
+		s=fopen("temp.txt","wb");
 		while(fread(&p, sizeof(p), 1, pk) == 1)
 		{
 
@@ -287,7 +287,7 @@ void mainmenu()
 	 	printf("\n\n\nenter the id that you want to search the record:");
 	 	scanf("%d",&id);
 	 	rewind(pk);
-		pk=fopen("D:\\record.txt","r+");
+		pk=fopen("record.txt","rb");
 	 	printf("\n\n\n%-10s %-20s %-20s %-25s %-15s %s\n", "Id"," Name","gender","Address","Disease","Date");
         printf("-------------------------------------------------------------------------------------------------------------\n");
 	 	while(fread(&p, sizeof(p), 1, pk) == 1)
@@ -323,7 +323,7 @@ void mainmenu()
     printf("\n\n\n\t\t\t********************************");
 	printf("\n\t\t\t\tDOCTOR RECORD");
 	printf("\n\t\t\t********************************");
-    pk=fopen("d:\\doctor.txt","a+");
+    pk=fopen("doctor.txt","ab");
     printf("\n\nEnter Doctor id: ");
     scanf("%d", &d.id);
 
@@ -359,7 +359,7 @@ void mainmenu()
 	    printf("\n\n\n\t\t\t********************************");
 	    printf("\n\n\n\n%-10s %-30s %-30s %-30s %s\n", "id", "Name", "gender", "Specialize","Date");
         printf("-------------------------------------------------------------------------------------------------------------------\n");
-        pk=fopen("D:\\doctor.txt","r+");
+        pk=fopen("doctor.txt","rb");
         rewind(pk);
 		while(fread(&d, sizeof(d), 1, pk) == 1)
 		{
