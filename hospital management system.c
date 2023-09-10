@@ -186,7 +186,7 @@ void mainmenu()
 		printf("\n\t\t\t\tPATIENT RECORD");
 		printf("\n\t\t\t********************************");
 		pk=fopen("D:\\record.txt","a+");
-		printf("\nenter the patient id:");
+		printf("\n\n\nenter the patient id:");
 	    scanf("%d",&p.id);
 	    printf("\nenter the name of patient:");
 	    fflush(stdin);
@@ -215,13 +215,13 @@ void mainmenu()
 		system("cls");
 		title();
 		printf("\n\n\n\n\t\t\t\t**********Patient List**********\n");
-		printf("\n\n\n%-10s %-20s %-30s %-30s %-20s %s\n", "Id"," Name","gender","Address","Disease","Date");
-        printf("------------------------------------------------------------------------------------------------------------------------\n");
+		printf("\n\n\n%-10s %-20s %-15s %-30s %-15s %s\n", "Id"," Name","gender","Address","Disease","Date");
+        printf("------------------------------------------------------------------------------------------------------------------\n");
 	    rewind(pk);
 		pk=fopen("D:\\record.txt","r+");
 	    while(fread(&p, sizeof(p), 1, pk) == 1)
 	    {
-			printf("\n%-10d %-2 %-19s %-30s %-30s %s\n", p.id,p.name,p.gender, p.address, p.disease, p.date);
+			printf("\n%-10d %-20s %-15s %-30s %-15s %s\n", p.id,p.name,p.gender, p.address, p.disease, p.date);
 	    	
 		}
 		fclose(pk);
@@ -239,19 +239,23 @@ void mainmenu()
 		printf("\n\n\n\t\t\tDISCHARGE PATIENT");
 		printf("\n\n\nenter patient id to discharge:");
 		scanf("%d",&id);
-		pk=fopen("D:\\record.txt","rb");
-		s=fopen("D:\\temp.txt","wb");
+		pk=fopen("D:\\record.txt","r+");
+		s=fopen("D:\\temp.txt","w+");
 		while(fread(&p, sizeof(p), 1, pk) == 1)
 		{
 
         if(id == p.id)
 		{
             k=1;
-        }
+           
+		    continue;
+        
+		}
 		
 		else
 		{
-            fwrite(&p, sizeof(p), 1, s);
+           
+		    fwrite(&p, sizeof(p), 1, s);
         }
     }
 
@@ -266,38 +270,41 @@ void mainmenu()
     }
 	fclose(pk);
     fclose(s);
-    remove("patient.txt");
-    rename("temp.txt", "patient.txt");
+    remove("record.txt");
+    rename("temp.txt", "record.txt");
     getch();
     system("cls");
 }
-	 void searchpatientrec()
+	void searchpatientrec()
 	 {
 	 	system("color 3 ");
 		 system("cls");
 		title();
 	 	int id ;
+	 	int c=0;
 	 	printf("\n\t\t\tSearch Patient Record");
 	 	printf("\n\t\t\t-------------------------------");
 	 	printf("\n\n\nenter the id that you want to search the record:");
 	 	scanf("%d",&id);
 	 	rewind(pk);
-		pk=fopen("D:\\patient.txt","r+");
-	 	printf("\n\n%-10s %-20s %-30s %-30s %-20s %s\n", "Id"," Name","gender","Address","Disease","Date");
-        printf("------------------------------------------------------------------------------------------------------------------------\n");
+		pk=fopen("D:\\record.txt","r+");
+	 	printf("\n\n\n%-10s %-20s %-20s %-25s %-15s %s\n", "Id"," Name","gender","Address","Disease","Date");
+        printf("-------------------------------------------------------------------------------------------------------------\n");
 	 	while(fread(&p, sizeof(p), 1, pk) == 1)
 		 {
 
             if(id == p.id)
 		    {
-               printf("%-10d %-30s %-30s %-30s %s\n", p.id, p.name,p.gender,p.disease, p.date);
-            }
-		
-		  else
-		   {
-              printf("\npatient id did not match so ther is no any patient that you want to search");
-           }
-       }
+               	printf("\n%-10d %-20s %-20s %-25s %-15s %s\n", p.id,p.name,p.gender, p.address, p.disease, p.date);
+            	c=1;
+			}
+		    
+		 }
+		 if (c==0)
+		 {
+		 	printf("\n\n\t\tRecord not found..");
+		 }
+       
        getch();
        system("cls");
 	 
