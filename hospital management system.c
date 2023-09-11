@@ -48,7 +48,7 @@ void welcomescreen()
 	system("color 1 ");
 	printf("\n\n\n\n\n\n\n\t\t***************************************************************************\n");
 	printf("\t\t*\t\t\t\t     WELCOME TO\t\t\t\t  *\n");
-	printf("\t\t*\t\t\t\tGRANDI HOSPITAL NEPAL\t\t\t  *\n");
+	printf("\t\t*\t\t\t\tMETRO HOSPITAL NEPAL\t\t\t  *\n");
 	printf("\t\t***************************************************************************\n");
 	printf("\n\n\n\n\n\n\t\t\tpress any key to continue.....");
 	getch();
@@ -58,12 +58,12 @@ void title()
 {
 	system("color 4 ");
 	printf("\n\n\n\n\n\n\n\t\t***************************************************************************\n");
-	printf("\t\t*\t\t\t\tGRANDI HOSPITAL\t\t\t\t  *\n");
+	printf("\t\t*\t\t\t\t METRO HOSPITAL\t\t\t\t  *\n");
 	printf("\t\t***************************************************************************\n");
 }
 void loginscreen()
 {
-	system("color 7 ");
+	system("color 8 ");
 	int i=0;
 	char username[20];
 	char password[15];
@@ -173,9 +173,9 @@ void mainmenu()
 }
 	void addpatientrec()
 	{
-		system("color 4 ");
 		FILE *pk;
 		system("cls");
+		system("color 4 ");
 		char myDate[12];
         time_t t = time(NULL);
         struct tm tm = *localtime(&t);
@@ -183,7 +183,7 @@ void mainmenu()
         strcpy(p.date, myDate);
 		title();
 		printf("\n\n\n\t\t\t********************************");
-		printf("\n\t\t\t\tPATIENT RECORD");
+		printf("\n\n\t\t\t\tPATIENT RECORD");
 		printf("\n\t\t\t********************************");
 		pk=fopen("record.txt","ab");
 		printf("\n\n\nenter the patient id:");
@@ -211,9 +211,9 @@ void mainmenu()
 	}
 	void patientlist()
 	{
-		system("color 6 ");
 		system("cls");
 		title();
+		system("color 6 ");
 		printf("\n\n\n\n\t\t\t\t**********Patient List**********\n");
 		printf("\n\n\n%-10s %-20s %-15s %-30s %-15s %s\n", "Id"," Name","gender","Address","Disease","Date");
         printf("------------------------------------------------------------------------------------------------------------------\n");
@@ -231,10 +231,11 @@ void mainmenu()
 	}
 	void dischargepatient()
 	{
-		system("color 8 ");
-		int id,k=0;
+		
 		system("cls");
 		title();
+		system("color 8 ");
+		int id,k=0;
 		FILE *s;
 		printf("\n\n\n\t\t\tDISCHARGE PATIENT");
 		printf("\n\n\nenter patient id to discharge:");
@@ -277,9 +278,9 @@ void mainmenu()
 }
 	void searchpatientrec()
 	 {
-	 	system("color 3 ");
 		 system("cls");
 		title();
+		system("color 3 ");
 	 	int id ;
 	 	int c=0;
 	 	printf("\n\t\t\tSearch Patient Record");
@@ -311,9 +312,9 @@ void mainmenu()
     }
     void adddoctor()
     {
-    	system("color 4 ");
 		system("cls");
     	title();
+    	system("color 4 ");
     	FILE *pk;
 	char myDate[12];
     time_t t = time(NULL);
@@ -351,9 +352,9 @@ void mainmenu()
 	}
 	void listdoctor()
 	{
-		system("color 5 ");
 		system("cls");
 		title();
+		system("color 5 ");
 		//printf("\n\n\n\t\t\t********************************");
 	    printf("\n\t\t\t\tDOCTOR RECORD");
 	    printf("\n\n\n\t\t\t********************************");
