@@ -7,7 +7,10 @@
 
 void welcomescreen();
 void title();
-void loginscreen();
+void addUsers();
+void signup();
+void saveUsers();
+void login();
 void mainmenu();
 void addpatientrec();
 void patientlist();
@@ -15,6 +18,13 @@ void dischargepatient();
 void searchpatientrec();
 void adddoctor();
 void listdoctor();
+void password();
+
+struct User {
+    char username[50];
+    char password[50];
+};
+
 
 struct patient
 {
@@ -36,20 +46,51 @@ struct doctor{
 }d;
 
 
+struct User users[100];
+int num = 0;
+
+
 FILE *pk;
+int i=0;
 int main()
 {
 	welcomescreen();
 	title();
-	loginscreen();
+    addUsers();
+    int choice;
+
+    while (1) {
+    	title();
+        printf("\n\n\t\t\t************Menu****************\n");
+        printf("\n\t\t\t\t1. Login\n");
+        printf("\t\t\t\t2. Signup\n");
+        printf("\t\t\t\t3. Exit\n");
+        printf("\n\n\t\t\tEnter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) 
+		{
+            case 1:
+                login();
+                break;
+            case 2:
+                signup();
+                break;
+            case 3:
+                saveUsers();
+                exit(0);
+            default:
+                printf("Invalid choice. Please try again.\n");
+        }
+    }
 	return 0;
 }
 void welcomescreen()
 {
-	system("color 2 ");
+	system("color 1 ");
 	printf("\n\n\n\n\n\n\n\t\t***************************************************************************\n");
 	printf("\t\t*\t\t\t\t     WELCOME TO\t\t\t\t  *\n");
-	printf("\t\t*\t\t\t\tMETRO HOSPITAL NEPAL\t\t\t  *\n");
+	printf("\t\t*\t\t\t\tGRANDI HOSPITAL NEPAL\t\t\t  *\n");
 	printf("\t\t***************************************************************************\n");
 	printf("\n\n\n\n\n\n\t\t\tpress any key to continue.....");
 	getch();
@@ -59,57 +100,143 @@ void title()
 {
 	system("color 4 ");
 	printf("\n\n\n\n\n\n\n\t\t***************************************************************************\n");
-	printf("\t\t*\t\t\t\t METRO HOSPITAL\t\t\t\t  *\n");
+	printf("\t\t*\t\t\t\tGRANDI HOSPITAL\t\t\t\t  *\n");
 	printf("\t\t***************************************************************************\n");
 }
-void loginscreen()
-{
-	system("color 8 ");
-	int i=0;
-	char username[20];
-	char password[15];
-	char originalusername[12];
-	char originalpassword[8];
-	do{
-		FILE *ptr, *pt;
-		
-		ptr=fopen("D:\\password.txt","r");
-		fgets(originalpassword,8,ptr);
-		pt=fopen("D:\\username.txt","r");
-		fgets(originalusername,12,pt);
-		
-		
-		printf("\n\n\n\t\t\t\tenter the username and password:");
-	    printf("\n\n\t\t\t\tusername:");
-	    scanf("%s",&username);
-	    printf("\n\t\t\t\tpassword:");
-	    scanf("%s",&password);
-	    if((strcmp(username,originalusername)==0)&& (strcmp(password,originalpassword)==0))
-	    {
-	    	printf("\n\n\t\t\tlogin successfully......");
-	    	printf("\n\n\n\n\n\t\t\t\tWelcome to the GRANDI HOSPITAL MANAGEMNET SYSTEM..........");
-	    	//printf("\n\n\npress any key to cotinue......");
-			getch();
-	    	mainmenu();//call main menu
-	    	break;
-		}
-		else{
-			system("cls");
-			printf("\n\n\t\tpassword is incorrect.....");
-			i++;
-			printf("\n\n\n\t\tpress any key to cotinue......");
-			getch();
-			system("cls");
-		}
-	}while(i<=2);
-		
-		if(i>2)
-		{
-			printf("\nyou have cross the limit.you cannot login");
-			getch();
-			exit(0);
-	    }  
+void addUsers()
+ {
+    
+	system("cls");
+	FILE *file;
+	file = fopen("users.txt", "r");
+    if (file == NULL) 
+	{
+        return;
+    }
+
+    while (fscanf(file, "%s %s", users[num].username, users[num].password) != EOF)
+	 {
+        num++;
+    }
+
+    fclose(file);
+    system("cls");
 }
+
+void saveUsers() 
+{
+    
+	system("cls");
+	FILE *file;
+	file = fopen("users.txt", "w");
+    if (file == NULL)
+	 {
+        printf("Error: Unable to save users.\n");
+        exit(0);
+    }
+
+    for ( i = 0; i < num; i++) 
+	{
+        fprintf(file, "%s %s\n", users[i].username, users[i].password);
+    }
+
+    fclose(file);
+    system("cls");
+}
+void takepassword(char pass[30])
+{
+    int i=0;
+    char ch;
+    while (1)
+    {
+        ch = getch();
+        if (ch == 13)
+        {
+            pass[i] = '\0';
+            break;
+        }
+        else if (ch == 8)
+        {
+            if (i > 0)
+            {
+                i--;
+                printf("\b \b");
+            }
+        }
+        else if (ch == 9 || ch == 32)
+        {
+            continue;
+        }
+        else
+        {
+            pass[i++] = ch;
+            printf("*");
+        }
+    }
+}
+void login() 
+{
+    char username[50];
+    char password[50];
+
+    printf("Enter username: ");
+    scanf("%s", username);
+
+    printf("Enter password: ");
+    takepassword(password);
+
+    for ( i = 0; i < num; i++) 
+	{
+        if (strcmp(username, users[i].username) == 0 && strcmp(password, users[i].password) == 0) 
+		{
+            printf("\n\n\n\t\t\t\tLogin successful.....");
+            printf("\n\n\n\t\t\t\t\t\t Welcome, %s...\n", username);
+            getch();
+            mainmenu();
+        }
+    }
+
+    printf("Login failed. Invalid username or password.\n");
+    system("cls");
+    
+}
+void signup() 
+{
+    system("cls");
+	char username[50];
+    char password[50];
+
+    printf("Enter a new username: ");
+    scanf("%s", username);
+
+    for ( i = 0; i < num; i++) 
+	{
+        if (strcmp(username, users[i].username) == 0) 
+		{
+            printf("Username already exists. Please choose a different one.\n");
+            return;
+        }
+    }
+
+    printf("Enter a new password: ");
+    scanf("%s", password);
+
+    if (num < 100)
+	 {
+        strcpy(users[num].username, username);
+        strcpy(users[num].password, password);
+        num++;
+        saveUsers();
+        printf("Signup successful. You can now login with your new account.\n");
+    } 
+	else
+	 
+	{
+        printf("Maximum number of users reached. Signup failed.\n");
+    }
+
+}
+
 void mainmenu()
 {
 	system("color 5 ");
@@ -174,9 +301,9 @@ void mainmenu()
 }
 	void addpatientrec()
 	{
+		system("color 4 ");
 		FILE *pk;
 		system("cls");
-		system("color 4 ");
 		char myDate[12];
         time_t t = time(NULL);
         struct tm tm = *localtime(&t);
@@ -184,7 +311,7 @@ void mainmenu()
         strcpy(p.date, myDate);
 		title();
 		printf("\n\n\n\t\t\t********************************");
-		printf("\n\n\t\t\t\tPATIENT RECORD");
+		printf("\n\t\t\t\tPATIENT RECORD");
 		printf("\n\t\t\t********************************");
 		pk=fopen("record.txt","ab");
 		printf("\n\n\nenter the patient id:");
@@ -212,9 +339,9 @@ void mainmenu()
 	}
 	void patientlist()
 	{
+		system("color 6 ");
 		system("cls");
 		title();
-		system("color 6 ");
 		printf("\n\n\n\n\t\t\t\t**********Patient List**********\n");
 		printf("\n\n\n%-10s %-20s %-15s %-30s %-15s %s\n", "Id"," Name","gender","Address","Disease","Date");
         printf("------------------------------------------------------------------------------------------------------------------\n");
@@ -232,11 +359,10 @@ void mainmenu()
 	}
 	void dischargepatient()
 	{
-		
-		system("cls");
-		title();
 		system("color 8 ");
 		int id,k=0;
+		system("cls");
+		title();
 		FILE *s;
 		printf("\n\n\n\t\t\tDISCHARGE PATIENT");
 		printf("\n\n\nenter patient id to discharge:");
@@ -279,9 +405,9 @@ void mainmenu()
 }
 	void searchpatientrec()
 	 {
+	 	system("color 3 ");
 		 system("cls");
 		title();
-		system("color 3 ");
 	 	int id ;
 	 	int c=0;
 	 	printf("\n\t\t\tSearch Patient Record");
@@ -313,9 +439,9 @@ void mainmenu()
     }
     void adddoctor()
     {
+    	system("color 4 ");
 		system("cls");
     	title();
-    	system("color 4 ");
     	FILE *pk;
 	char myDate[12];
     time_t t = time(NULL);
@@ -353,9 +479,9 @@ void mainmenu()
 	}
 	void listdoctor()
 	{
+		system("color 5 ");
 		system("cls");
 		title();
-		system("color 5 ");
 		//printf("\n\n\n\t\t\t********************************");
 	    printf("\n\t\t\t\tDOCTOR RECORD");
 	    printf("\n\n\n\t\t\t********************************");
