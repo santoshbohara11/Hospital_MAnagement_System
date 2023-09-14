@@ -18,6 +18,7 @@ void dischargepatient();
 void searchpatientrec();
 void adddoctor();
 void listdoctor();
+void removedoctor();
 void password();
 
 struct User {
@@ -255,7 +256,8 @@ void mainmenu()
 		printf("\n\t\t\t\t\t\t4.Search Patient record");
 		printf("\n\t\t\t\t\t\t5.Add doctor record");
 		printf("\n\t\t\t\t\t\t6.List doctor record");
-		printf("\n\t\t\t\t\t\t7.Exit");
+		printf("\n\t\t\t\t\t\t7.Remove doctor record");
+		printf("\n\t\t\t\t\t\t8.Exit");
 		printf("\n\n\n\t\t\t\tchoose any number that you want:");
 		scanf("%d",&choice);
 		switch(choice)
@@ -285,6 +287,10 @@ void mainmenu()
 				break;
 				
 			case 7:
+				removedoctor();
+				break;
+				
+			case 8:
 				exit(0);
 				break;
 				
@@ -293,12 +299,12 @@ void mainmenu()
 				goto label;
 			
 		}
-		printf("\nDo you want to continue?..Press Y to continue.");
+		/*printf("\nDo you want to continue?..Press Y to continue.");
 		scanf("%c",&press);
 		if(press=='y'||press=='Y')
 		{
 			goto label;
-		}
+		}*/
 		system("cls");
 	}
 }
@@ -501,4 +507,50 @@ void mainmenu()
 		printf("\n\n\t\tPress any key to continue.......");
 		getch();
 		system("cls");
+	}
+	void removedoctor()
+	{
+			system("color 8 ");
+		int id,k=0;
+		system("cls");
+		title();
+		FILE *n;
+		printf("\n\n\n\t\t\t\t\t*******Remove Doctor***********");
+		printf("\n\n\n\t\t\t\t\tenter doctor id:");
+		scanf("%d",&id);
+		pk=fopen("doctor.txt","rb");
+		n=fopen("temp.txt","wb");
+		while(fread(&d, sizeof(d), 1, pk) == 1)
+		{
+
+        if(id == d.id)
+		{
+            k=1;
+           
+		    continue;
+        
+		}
+		
+		else
+		{
+           
+		    fwrite(&d, sizeof(d), 1, n);
+        }
+    }
+
+    if(k==1)
+	{
+        printf("\n\nRemove Successfully...........");
+        
+    }
+	else
+	{
+        printf("\n\n\t\t\t\tRecord Not Found !");
+    }
+	fclose(pk);
+    fclose(n);
+    remove("doctor.txt");
+    rename("temp.txt", "doctor.txt");
+    getch();
+    system("cls");
 	}
