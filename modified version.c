@@ -90,20 +90,20 @@ int main()
 void welcomescreen()
 {
 	system("color 1 ");
-	printf("\t\t\t\t***************************************************************************\n");
-	printf("\t\t\t\t*\t\t\t\t     WELCOME TO\t\t\t\t  *\n");
-	printf("\t\t\t\t*\t\t\t\tMETRO HOSPITAL NEPAL\t\t\t  *\n");
-	printf("\t\t\t\t***************************************************************************\n");
-	printf("\n\n\n\n\n\n\t\t\t\t\tpress any key to continue.....");
+	printf("\t\t\t\t\t***************************************************************************\n");
+	printf("\t\t\t\t\t*\t\t\t\t     WELCOME TO\t\t\t\t  *\n");
+	printf("\t\t\t\t\t*\t\t\t\tMETRO HOSPITAL NEPAL\t\t\t  *\n");
+	printf("\t\t\t\t\t***************************************************************************\n");
+	printf("\n\n\n\n\n\n\n\n\t\t\t\t\tpress any key to continue.....");
 	getch();
 	system("cls");
 }
 void title()
 {
 	system("color 4 ");
-	printf("\t\t\t\t***************************************************************************\n");
-	printf("\t\t\t\t*\t\t\t\tMETRO HOSPITAL\t\t\t\t  *\n");
-	printf("\t\t\t\t***************************************************************************\n");
+	printf("\t\t\t\t\t***************************************************************************\n");
+	printf("\t\t\t\t\t*\t\t\t\tMETRO HOSPITAL\t\t\t\t  *\n");
+	printf("\t\t\t\t\t***************************************************************************\n");
 }
 void addUsers()
  {
@@ -192,8 +192,8 @@ void login()
 	{
         if (strcmp(username, users[i].username) == 0 && strcmp(password, users[i].password) == 0) 
 		{
-            printf("\n\n\n\t\t\t\tLogin successful.....");
-            printf("\n\n\n\t\t\t\t\t\t Welcome, %s...\n", username);
+            printf("\n\n\n\t\t\t\t\t\tLogin successful.....");
+            printf("\n\n\n\t\t\t\t\t\t\t\t Welcome, %s...\n", username);
             getch();
             mainmenu();
         }
@@ -207,10 +207,11 @@ void login()
 void signup() 
 {
     system("cls");
+    title();
 	char username[50];
     char password[50];
 
-    printf("Enter a new username: ");
+    printf("\n\n\n\t\t\t\t\t\tEnter a new username: ");
     scanf("%s", username);
 
     for ( i = 0; i < num; i++) 
@@ -222,7 +223,7 @@ void signup()
         }
     }
 
-    printf("Enter a new password: ");
+    printf("\t\t\t\t\t\tEnter a new password: ");
     scanf("%s", password);
 
     if (num < 100)
@@ -233,7 +234,6 @@ void signup()
         saveUsers();
         printf("Signup successful. You can now login with your new account.\n");
     } 
-	else
 	 
 	{
         printf("Maximum number of users reached. Signup failed.\n");
@@ -258,7 +258,7 @@ void mainmenu()
 		printf("\n\t\t\t\t\t\t6.List doctor record");
 		printf("\n\t\t\t\t\t\t7.Remove doctor record");
 		printf("\n\t\t\t\t\t\t8.Exit");
-		printf("\n\n\n\t\t\t\tchoose any number that you want:");
+		printf("\n\n\n\t\t\t\t\t\tchoose any number that you want:");
 		scanf("%d",&choice);
 		switch(choice)
 		{
@@ -313,15 +313,8 @@ void mainmenu()
 		system("color 4 ");
 		FILE *pk;
 		system("cls");
-		char myDate[12];
-        time_t t = time(NULL);
-        struct tm tm = *localtime(&t);
-        sprintf(myDate, "%02d/%02d/%d", tm.tm_mday, tm.tm_mon+1, tm.tm_year + 1900);
-        strcpy(p.date, myDate);
 		title();
-		//printf("\n\n\n\t\t\t********************************");
 		printf("\n\t\t\t\t\t\t\t*******PATIENT RECORD******");
-		//printf("\n\t\t\t********************************");
 		pk=fopen("record.txt","ab");
 		printf("\n\n\n\t\t\t\t\tenter the patient id:");
 	    scanf("%d",&p.id);
@@ -337,9 +330,9 @@ void mainmenu()
 	    printf("\t\t\t\t\tenter the disease of patient:");
 	    fflush(stdin);
 	    gets(p.disease);
-	    /*printf("\nenter the date:");
+	    printf("\n\t\t\t\tenter the date:");
 	    fflush(stdin);
-	    gets(p.date);*/
+	    gets(p.date);
 	    printf("\n\n\t\t\t\t\t\tpatient detail added successfully......");
 	    getch();
 	    fwrite(&p,sizeof(p),1,pk);
@@ -351,18 +344,18 @@ void mainmenu()
 		system("color 6 ");
 		system("cls");
 		title();
-		printf("\n\n\n\n\t\t\t\t\t\t**********Patient List**********\n");
-		printf("\n\n\n\t\t%-10s %-20s %-15s %-30s %-15s %s\n", "Id"," Name","gender","Address","Disease","Date");
-        printf("\t\t------------------------------------------------------------------------------------------------------------------\n");
+		printf("\n\n\n\n\t\t\t\t\t\t\t\t**********Patient List**********\n");
+		printf("\n\n\n\t\t\t%-10s %-20s %-15s %-30s %-15s %s\n", "Id"," Name","gender","Address","Disease","Date");
+        printf("\t\t\t------------------------------------------------------------------------------------------------------------------\n");
 	    rewind(pk);
 		pk=fopen("record.txt","rb");
 	    while(fread(&p, sizeof(p), 1, pk) == 1)
 	    {
-			printf("\n\t\t%-10d %-20s %-15s %-30s %-15s %s\n", p.id,p.name,p.gender, p.address, p.disease, p.date);
+			printf("\n\t\t\t%-10d %-20s %-15s %-30s %-15s %s\n", p.id,p.name,p.gender, p.address, p.disease, p.date);
 	    	
 		}
 		fclose(pk);
-		printf("\n\n\t\tPress any key to continue.......");
+		printf("\n\n\n\t\t\t\tPress any key to continue.......");
 		getch();
 		system("cls");
 	}
@@ -373,8 +366,8 @@ void mainmenu()
 		system("cls");
 		title();
 		FILE *s;
-		printf("\n\n\n\t\t\t\t\t*********DISCHARGE PATIENT*********");
-		printf("\n\n\n\t\t\t\t\tenter patient id:");
+		printf("\n\n\n\t\t\t\t\t\t\t*********DISCHARGE PATIENT*********");
+		printf("\n\n\n\t\t\t\t\t\tenter patient id:");
 		scanf("%d",&id);
 		pk=fopen("record.txt","rb");
 		s=fopen("temp.txt","wb");
@@ -398,12 +391,12 @@ void mainmenu()
 
     if(k==1)
 	{
-        printf("\n\nPatient Discharged Successfully...........");
+        printf("\n\n\n\n\t\t\t\t\t\tPatient Discharged Successfully...........");
         
     }
 	else
 	{
-        printf("\n\n\t\t\t\tRecord Not Found !");
+        printf("\n\n\t\t\t\t\t\tRecord Not Found !");
     }
 	fclose(pk);
     fclose(s);
@@ -452,11 +445,6 @@ void mainmenu()
 		system("cls");
     	title();
     	FILE *pk;
-	char myDate[12];
-    time_t t = time(NULL);
-    struct tm tm = *localtime(&t);
-    sprintf(myDate, "%02d/%02d/%d", tm.tm_mday, tm.tm_mon+1, tm.tm_year + 1900);
-    strcpy(d.date, myDate);
     printf("\n\n\n\t\t\t\t\t\t\t********************************");
 	printf("\n\t\t\t\t\t\t\t\tDOCTOR RECORD");
 	printf("\n\t\t\t\t\t\t\t********************************");
@@ -476,9 +464,9 @@ void mainmenu()
     fflush(stdin);
     gets(d.specialize);
     
-    /*printf("\nDate:");
+    printf("\nDate:");
     fflush(stdin);
-    gets(d.date);*/
+    gets(d.date);
 
     printf("\n\n\t\t\t\t\t\t\t\tDoctor Added Successfully....\n\n");
     getch();
@@ -494,17 +482,17 @@ void mainmenu()
 		//printf("\n\n\n\t\t\t********************************");
 	    printf("\n\n\n\t\t\t\t\t\t\tDOCTOR RECORD");
 	    printf("\n\n\n\t\t\t\t\t\t********************************");
-	    printf("\n\n\n\n\t\t%-10s %-30s %-30s %-30s %s\n", "id", "Name", "gender", "Specialize","Date");
-        printf("\t\t-------------------------------------------------------------------------------------------------------------------\n");
+	    printf("\n\n\n\n\t\t\t%-10s %-30s %-30s %-30s %s\n", "id", "Name", "gender", "Specialize","Date");
+        printf("\t\t\t-------------------------------------------------------------------------------------------------------------------\n");
         pk=fopen("doctor.txt","rb");
         rewind(pk);
 		while(fread(&d, sizeof(d), 1, pk) == 1)
 		{
-			 printf("\t\t%-10d %-30s %-30s %-30s %s\n", d.id, d.name,d.gender, d.specialize, d.date);
+			 printf("\t\t\t%-10d %-30s %-30s %-30s %s\n", d.id, d.name,d.gender, d.specialize, d.date);
 			 
 		}
 		fclose(pk);
-		printf("\n\n\t\tPress any key to continue.......");
+		printf("\n\n\t\t\t\t\tPress any key to continue.......");
 		getch();
 		system("cls");
 	}
